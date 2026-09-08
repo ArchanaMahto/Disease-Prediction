@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPulse | Differential Diagnosis & Model Benchmark Platform</title>
+    <meta name="description" content="AI-assisted educational differential diagnosis triage tool and scikit-learn model benchmark platform.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Persistent Sticky Medical Disclaimer Header -->
+    <div class="disclaimer-banner" id="disclaimerBanner">
+        <div class="disclaimer-content">
+            <span class="disclaimer-icon">⚠️</span>
+            <span class="disclaimer-text">
+                <strong>EDUCATIONAL & TRIAGE AID ONLY:</strong> This tool is not a medical diagnosis. In case of emergency or severe symptoms, consult a licensed physician or contact emergency services immediately.
+            </span>
+        </div>
+    </div>
+
+    <!-- Application Shell -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-group">
+                <div class="logo-icon">🩺</div>
+                <div>
+                    <h1 class="app-title">MediPulse</h1>
+                    <p class="app-subtitle">Differential Diagnosis & ML Benchmarking Engine</p>
+                </div>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="triageTab">
+                    <span class="tab-icon">🔍</span> Differential Triage
+                </button>
+                <button class="tab-btn" data-tab="benchmarkTab">
+                    <span class="tab-icon">📊</span> Model Benchmarks
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- TAB 1: Differential Triage -->
+            <section id="triageTab" class="tab-content active">
+                <div class="triage-grid">
+                    
+                    <!-- Left Panel: Symptom Selector -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2>1. Select Symptoms</h2>
+                            <span class="badge" id="symptomCountBadge">0 selected</span>
+                        </div>
+                        
+                        <!-- Search Box -->
+                        <div class="search-container">
+                            <input type="text" id="symptomSearch" placeholder="Type to search symptoms (e.g. fever, rash, headache)..." autocomplete="off">
+                            <div id="autocompleteDropdown" class="autocomplete-dropdown hidden"></div>
+                        </div>
+
+                        <!-- Active Selected Tags -->
+                        <div class="selected-section">
+                            <div class="selected-header">
+                                <span>Active Symptoms</span>
+                                <button id="clearSymptomsBtn" class="text-btn">Clear All</button>
+                            </div>
+                            <div id="selectedTagsTray" class="tags-tray">
+                                <p class="placeholder-text">No symptoms selected yet. Search above to add.</p>
+                            </div>
+                        </div>
+
+                        <!-- Model Selection Controls -->
+                        <div class="model-select-group">
+                            <label for="modelSelect">Classification Algorithm:</label>
+                            <select id="modelSelect" class="custom-select">
+                                <option value="random_forest">Random Forest (Champion - Recommended)</option>
+                                <option value="gradient_boosting">Gradient Boosting</option>
+                                <option value="decision_tree">Decision Tree</option>
+                                <option value="naive_bayes">Naive Bayes</option>
+                            </select>
+                        </div>
+
+                        <button id="predictBtn" class="primary-btn" disabled>
+                            <span>Run Differential Diagnosis</span>
+                            <span class="btn-spinner hidden" id="predictSpinner"></span>
+                        </button>
+                    </div>
+
+                    <!-- Right Panel: Diagnosis Results & Explainability -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2>2. Differential Diagnosis Results</h2>
+                            <span class="active-model-tag" id="activeModelTag">Random Forest</span>
+                        </div>
+
+                        <!-- Results Container -->
+                        <div id="resultsContainer" class="results-container">
+                            <div class="empty-state">
+                                <div class="empty-icon">📋</div>
+                                <h3>No Symptoms Analyzed</h3>
+                                <p>Select symptoms from the left panel and click "Run Differential Diagnosis" to generate probability estimates.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- TAB 2: Model Benchmarks -->
+            <section id="benchmarkTab" class="tab-content">
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <div>
+                            <h2>Scikit-Learn Algorithm Benchmarks</h2>
+                            <p class="section-desc">Evaluated on test set across 41 disease prognosis classifications.</p>
+                        </div>
+                        <button id="refreshBenchmarksBtn" class="secondary-btn">Refresh Metrics</button>
+                    </div>
+
+                    <div class="benchmark-table-wrapper">
+                        <table class="benchmark-table">
+                            <thead>
+                                <tr>
+                                    <th>Algorithm</th>
+                                    <th>Accuracy</th>
+                                    <th>Precision (Weighted)</th>
+                                    <th>Recall (Weighted)</th>
+                                    <th>F1-Score</th>
+                                    <th>Inference Latency</th>
+                                    <th>Train Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkTableBody">
+                                <tr>
+                                    <td colspan="7" class="table-loading">Loading benchmark metrics...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Error Toast Notification -->
+    <div id="errorToast" class="toast hidden">
+        <span id="toastMessage">An error occurred.</span>
+    </div>
+
+    <!-- Script -->
+    <script src="/static/app.js"></script>
+</body>
+</html>

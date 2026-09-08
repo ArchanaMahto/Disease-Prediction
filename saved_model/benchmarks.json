@@ -1,0 +1,38 @@
+{
+  "naive_bayes": {
+    "name": "Naive Bayes",
+    "accuracy": 0.998,
+    "precision": 0.9981,
+    "recall": 0.998,
+    "f1_score": 0.998,
+    "latency_ms": 0.016,
+    "train_time_sec": 0.05
+  },
+  "decision_tree": {
+    "name": "Decision Tree",
+    "accuracy": 0.92,
+    "precision": 0.9269,
+    "recall": 0.92,
+    "f1_score": 0.9204,
+    "latency_ms": 0.002,
+    "train_time_sec": 0.038
+  },
+  "random_forest": {
+    "name": "Random Forest",
+    "accuracy": 0.9951,
+    "precision": 0.9953,
+    "recall": 0.9951,
+    "f1_score": 0.995,
+    "latency_ms": 0.018,
+    "train_time_sec": 0.513
+  },
+  "gradient_boosting": {
+    "name": "Gradient Boosting",
+    "accuracy": 0.9824,
+    "precision": 0.9839,
+    "recall": 0.9824,
+    "f1_score": 0.9825,
+    "latency_ms": 0.023,
+    "train_time_sec": 12.543
+  }
+}
