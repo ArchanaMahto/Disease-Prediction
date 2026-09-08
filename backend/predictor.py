@@ -136,17 +136,20 @@ class MedicalPredictor:
                 detail=f"Unknown symptom ID(s): {invalid_symptoms}. Use /api/symptoms for valid list."
             )
 
-        # Build binary feature vector
-        vector = np.zeros(len(self.symptoms_list), dtype=int)
+        # Build binary feature vector with column names matching training data
+        feature_names = [s["id"] for s in self.symptoms_list]
+        vector_dict = {sym_id: 0 for sym_id in feature_names}
         for sym_id in input_symptom_ids:
-            idx = self.symptom_indices[sym_id]
-            vector[idx] = 1
+            vector_dict[sym_id] = 1
+
+        import pandas as pd
+        vector_df = pd.DataFrame([vector_dict])
 
         model = self.models[model_id]
         
         # Calculate probabilities
         if hasattr(model, "predict_proba"):
-            probabilities = model.predict_proba([vector])[0]
+            probabilities = model.predict_proba(vector_df)[0]
             classes = model.classes_
             
             # Sort top_n diseases by probability descending
@@ -169,7 +172,7 @@ class MedicalPredictor:
                 })
         else:
             # Fallback for models without predict_proba
-            pred_class = model.predict([vector])[0]
+            pred_class = model.predict(vector_df)[0]
             contributions = self._extract_feature_contributions(model, model_id, input_symptom_ids, pred_class)
             predictions = [{
                 "rank": 1,
